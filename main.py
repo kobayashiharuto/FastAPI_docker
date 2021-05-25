@@ -1,7 +1,12 @@
 import uvicorn
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
+
+
+class Image(BaseModel):
+    binary: str
 
 
 @app.get("/")
@@ -9,22 +14,16 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/image/{binary}")
+def read_item(binary: str, param: str = None):
+    print(binary)
+    return {"binary": binary, "param": param}
 
 
-@app.post("/hello_post")
-def post_hello(param: str):
-    """
-    postで返事する
-    """
-    if param:
-        message = f"[POST]hello, {param}!"
-    else:
-        message = f"[POST]hello, visitor!"
-
-    return {"message": message}
+@app.post("/image_post")
+def post_hello(image: Image):
+    print(image.binary)
+    return image
 
 
 if __name__ == '__main__':
