@@ -11,7 +11,7 @@ class Image(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello!!!": "Worlds"}
 
 
 @app.get("/image/{binary}")
